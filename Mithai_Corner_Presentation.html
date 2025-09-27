@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mithai Corner - Project Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            width: 90vw;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide h1 {
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #d4af37;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin: 20px 0 15px 0;
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .slide ul {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid #d4af37;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .product-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 12px 20px;
+            background: #d4af37;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #b8941f;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .title-slide {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .title-slide h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+                width: 95vw;
+                height: 95vh;
+            }
+            
+            .slide h1 {
+                font-size: 2rem;
+            }
+            
+            .slide h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="title-slide">
+                <h1>🍬 Mithai Corner</h1>
+                <p class="subtitle">Authentic Indian Sweets E-commerce Website</p>
+                <div class="highlight">
+                    Modern Web Development Project<br>
+                    HTML, CSS, JavaScript Implementation<br>
+                    Responsive E-commerce Landing Page
+                </div>
+                <p style="font-size: 1.3rem; margin-top: 30px;">
+                    <strong>Developer:</strong> [Your Name]<br>
+                    <strong>Date:</strong> [Current Date]
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Project Introduction -->
+        <div class="slide">
+            <h2>📋 Project Introduction</h2>
+            <h3>What is Mithai Corner?</h3>
+            <div class="highlight">
+                🍬 Authentic Indian Sweet Shop Website
+            </div>
+            <ul>
+                <li>Beautiful, modern e-commerce landing page</li>
+                <li>Showcases traditional Indian sweets (Mithai)</li>
+                <li>Interactive product catalog with filtering</li>
+                <li>Contact form for customer inquiries</li>
+                <li>Fully responsive design</li>
+            </ul>
+            <h3>Key Features:</h3>
+            <ul>
+                <li>12 Authentic Indian Sweets</li>
+                <li>Category-based Product Filtering</li>
+                <li>Search Functionality</li>
+                <li>Contact Form Integration</li>
+                <li>Mobile-Responsive Design</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Technology Stack -->
+        <div class="slide">
+            <h2>⚙️ Technology Stack</h2>
+            <h3>Frontend Technologies:</h3>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h4>HTML5</h4>
+                    <p>Semantic markup structure</p>
+                </div>
+                <div class="tech-item">
+                    <h4>CSS3</h4>
+                    <p>Modern styling with Flexbox & Grid</p>
+                </div>
+                <div class="tech-item">
+                    <h4>JavaScript</h4>
+                    <p>Interactive functionality</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Font Awesome</h4>
+                    <p>Professional icons</p>
+                </div>
+            </div>
+            <h3>Design Features:</h3>
+            <ul>
+                <li>Responsive Web Design</li>
+                <li>CSS Animations & Transitions</li>
+                <li>Modern UI/UX Principles</li>
+                <li>Indian Cultural Theme</li>
+                <li>Professional Color Scheme</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Project Structure -->
+        <div class="slide">
+            <h2>📁 Project Structure</h2>
+            <h3>File Organization</h3>
+            <div class="code-block">
+E-commerce/
+├── index.html          # Main HTML file
+├── styles.css          # CSS styling
+├── script.js           # JavaScript functionality
+├── README.md           # Project documentation
+└── photos/             # Image assets
+    ├── bgimage.jpg     # Hero background
+    ├── gulab-jamun.jpg # Product images
+    ├── rasgulla.jpg    # (12 total products)
+    └── README.md       # Image guide
+            </div>
+            <ul>
+                <li>Clean, organized codebase</li>
+                <li>Modular file structure</li>
+                <li>Easy to maintain and extend</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Design Features -->
+        <div class="slide">
+            <h2>🎨 Design Features</h2>
+            <h3>Visual Design Highlights</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🎨 Modern Indian Theme</h3>
+                    <p>Golden and saffron color palette with traditional Indian cultural elements</p>
+                </div>
+                <div class="feature-card">
+                    <h3>✨ Interactive Elements</h3>
+                    <p>Smooth hover animations, product card transitions, and button effects</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📝 Typography</h3>
+                    <p>Poppins font family with clear hierarchy and readable content</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Product Showcase -->
+        <div class="slide">
+            <h2>🍬 Product Showcase</h2>
+            <h3>12 Authentic Indian Sweets</h3>
+            <div class="product-grid">
+                <div class="product-item">
+                    <h4>Traditional Sweets</h4>
+                    <ul>
+                        <li>Gulab Jamun (₹120) - Best Seller</li>
+                        <li>Rasgulla (₹100) - Popular</li>
+                        <li>Kaju Katli (₹200) - Premium</li>
+                        <li>Ladoo (₹80) - Classic</li>
+                        <li>Barfi (₹150) - Traditional</li>
+                        <li>Jalebi (₹90) - Crispy</li>
+                    </ul>
+                </div>
+                <div class="product-item">
+                    <h4>Festival Special</h4>
+                    <ul>
+                        <li>Diwali Special Mix (₹500)</li>
+                        <li>Holi Gujiya (₹180)</li>
+                        <li>Raksha Bandhan Thali (₹350)</li>
+                    </ul>
+                </div>
+                <div class="product-item">
+                    <h4>Modern Variants</h4>
+                    <ul>
+                        <li>Chocolate Barfi (₹220)</li>
+                        <li>Fusion Ladoo (₹160)</li>
+                        <li>Sugar-Free Sweets (₹180)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Key Functionality -->
+        <div class="slide">
+            <h2>🔧 Key Functionality</h2>
+            <h3>Interactive Features</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🔍 Product Management</h3>
+                    <ul>
+                        <li>Category filtering</li>
+                        <li>Real-time search</li>
+                        <li>Product interest tracking</li>
+                        <li>"Add to Cart" simulation</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 User Experience</h3>
+                    <ul>
+                        <li>Mobile-responsive navigation</li>
+                        <li>Smooth scrolling</li>
+                        <li>Toast notifications</li>
+                        <li>Form validation</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>📞 Contact Integration</h3>
+                    <ul>
+                        <li>Comprehensive contact form</li>
+                        <li>Interest-based pre-filling</li>
+                        <li>Success confirmation</li>
+                        <li>Multiple contact options</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Responsive Design -->
+        <div class="slide">
+            <h2>📱 Responsive Design</h2>
+            <h3>Multi-Device Compatibility</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📱 Mobile First</h3>
+                    <ul>
+                        <li>Hamburger menu navigation</li>
+                        <li>Touch-friendly buttons</li>
+                        <li>Optimized layouts</li>
+                        <li>Fast loading performance</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>💻 Desktop Experience</h3>
+                    <ul>
+                        <li>Full navigation menu</li>
+                        <li>Grid-based product layout</li>
+                        <li>Hover effects</li>
+                        <li>Professional appearance</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>Breakpoints:</h3>
+            <ul>
+                <li>Mobile: < 768px</li>
+                <li>Tablet: 768px - 1024px</li>
+                <li>Desktop: > 1024px</li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: Technical Implementation -->
+        <div class="slide">
+            <h2>⚡ Technical Implementation</h2>
+            <h3>Code Quality & Performance</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>✅ Clean Code</h3>
+                    <ul>
+                        <li>Semantic HTML5 structure</li>
+                        <li>Modular CSS organization</li>
+                        <li>Well-commented JavaScript</li>
+                        <li>No linter errors</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>⚡ Performance</h3>
+                    <ul>
+                        <li>Optimized image loading</li>
+                        <li>Efficient CSS animations</li>
+                        <li>Debounced scroll events</li>
+                        <li>Fast page load times</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>🛡️ Error Handling</h3>
+                    <ul>
+                        <li>Image fallback system</li>
+                        <li>Form validation</li>
+                        <li>Graceful degradation</li>
+                        <li>Cross-browser compatibility</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Business Value -->
+        <div class="slide">
+            <h2>💼 Business Value</h2>
+            <h3>Real-World Applications</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🏪 For Sweet Shops</h3>
+                    <ul>
+                        <li>Professional online presence</li>
+                        <li>Product catalog showcase</li>
+                        <li>Customer inquiry management</li>
+                        <li>Brand building and marketing</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>📈 Business Benefits</h3>
+                    <ul>
+                        <li>Increased customer reach</li>
+                        <li>24/7 product visibility</li>
+                        <li>Lead generation system</li>
+                        <li>Professional credibility</li>
+                    </ul>
+                </div>
+            </div>
+            <h3>Scalability:</h3>
+            <ul>
+                <li>Easy to add new products</li>
+                <li>Simple content management</li>
+                <li>Expandable functionality</li>
+                <li>Mobile commerce ready</li>
+            </ul>
+        </div>
+
+        <!-- Slide 11: Project Highlights -->
+        <div class="slide">
+            <h2>🏆 Project Highlights</h2>
+            <h3>Key Achievements</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🏆 Technical Excellence</h3>
+                    <ul>
+                        <li>Modern web development practices</li>
+                        <li>Responsive design implementation</li>
+                        <li>Clean, maintainable code</li>
+                        <li>Professional UI/UX design</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>🎯 Business Impact</h3>
+                    <ul>
+                        <li>Complete e-commerce solution</li>
+                        <li>Customer engagement features</li>
+                        <li>Professional brand presentation</li>
+                        <li>Mobile-first approach</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>✨ Innovation</h3>
+                    <ul>
+                        <li>Indian cultural theme integration</li>
+                        <li>Interactive product showcase</li>
+                        <li>Seamless user experience</li>
+                        <li>Scalable architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusion -->
+        <div class="slide">
+            <div class="title-slide">
+                <h1>🎉 Project Success!</h1>
+                <div class="highlight">
+                    Mithai Corner - Complete Success!
+                </div>
+                <h3>What We Built:</h3>
+                <ul style="text-align: left; max-width: 600px;">
+                    <li>Professional e-commerce landing page</li>
+                    <li>12 authentic Indian sweets showcase</li>
+                    <li>Interactive product filtering system</li>
+                    <li>Responsive design for all devices</li>
+                    <li>Contact form with lead generation</li>
+                </ul>
+                <h3>Technical Excellence:</h3>
+                <ul style="text-align: left; max-width: 600px;">
+                    <li>Clean, modern codebase</li>
+                    <li>No errors or issues</li>
+                    <li>Production-ready quality</li>
+                    <li>Scalable architecture</li>
+                </ul>
+                <div class="highlight" style="margin-top: 30px;">
+                    Ready for deployment and real business use! 🚀
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Thank You -->
+        <div class="slide">
+            <div class="title-slide">
+                <h1>🍬 Thank You!</h1>
+                <h2>Mithai Corner Project</h2>
+                <p class="subtitle">Authentic Indian Sweets E-commerce Website</p>
+                <div class="highlight">
+                    Questions & Discussion
+                </div>
+                <h3>Ready to answer questions about:</h3>
+                <ul style="text-align: left; max-width: 500px;">
+                    <li>Technical implementation</li>
+                    <li>Design decisions</li>
+                    <li>Business applications</li>
+                    <li>Future enhancements</li>
+                </ul>
+                <p style="font-size: 1.3rem; margin-top: 30px;">
+                    Let's discuss how this project can be further developed! 💬
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">13</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    changeSlide(-1);
+                }
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
